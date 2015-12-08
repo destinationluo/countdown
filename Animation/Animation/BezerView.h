@@ -8,7 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BezerViewDelegate <NSObject>
+
+@optional
+-(void)bezerViewClickStop;
+@optional
+-(void)bezerViewClickReStart;
+@optional
+-(void)bezerViewPreSecondEnd;
+@optional
+-(void)bezerViewAnimalStart;
+@optional
+-(void)bezerViewAnimalFinish;
+
+
+@end
+
 @interface BezerView : UIView
+@property(nonatomic,weak)id<BezerViewDelegate> delegate;
+
 // 倒计时总数
 @property (nonatomic,assign) NSInteger total;
 

@@ -143,6 +143,9 @@
          CFTimeInterval pausedTime = [_layer convertTime:CACurrentMediaTime() fromLayer:nil];
         _layer.speed = 0.0;
         _layer.timeOffset = pausedTime;
+        if ([_delegate respondsToSelector:@selector(bezerViewClickStop)]) {
+            [_delegate  bezerViewClickStop];
+        }
     }
     else
     {
@@ -155,6 +158,10 @@
         _layer.beginTime = 0.0;
         CFTimeInterval timeSincePause = [_layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime2;
         _layer.beginTime = timeSincePause;
+        
+        if ([_delegate respondsToSelector:@selector(bezerViewClickReStart)]) {
+            [_delegate bezerViewClickReStart];
+        }
     }
     _bool=!_bool;
 }
@@ -184,16 +191,26 @@
         }
         NSLog(@"第%d秒",_count);
         [_button setTitle:[NSString stringWithFormat:@"%d",_count-1] forState:UIControlStateNormal];
+        if ([_delegate respondsToSelector:@selector(bezerViewPreSecondEnd)]) {
+            [_delegate bezerViewPreSecondEnd];
+        }
     }
 }
 
 #pragma mark - Animation delegate
 - (void)animationDidStart:(CAAnimation *)anim
 {
+    
+    if ([_delegate respondsToSelector:@selector(bezerViewAnimalStart)]) {
+        [_delegate bezerViewAnimalStart];
+    }
     NSLog(@"动画开始了");
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
+    if ([_delegate respondsToSelector:@selector(bezerViewAnimalFinish)]) {
+        [_delegate bezerViewAnimalFinish];
+    }
     NSLog(@"动画结束了");
 }
 
